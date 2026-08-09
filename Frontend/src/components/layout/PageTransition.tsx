@@ -43,7 +43,7 @@ export function MissionFrame({
     return (
       <div
         className={cn(
-          'relative mx-auto space-y-7 p-4 sm:p-6 md:space-y-8 md:p-8 lg:p-10',
+          'relative mx-auto flex flex-col space-y-7 p-4 sm:p-6 md:space-y-8 md:p-8 lg:p-10',
           wide ? 'max-w-[92rem]' : 'max-w-7xl',
           className,
         )}
@@ -56,7 +56,7 @@ export function MissionFrame({
   return (
     <motion.div
       className={cn(
-        'relative mx-auto space-y-7 p-4 sm:p-6 md:space-y-8 md:p-8 lg:p-10',
+        'relative mx-auto flex flex-col space-y-7 p-4 sm:p-6 md:space-y-8 md:p-8 lg:p-10',
         wide ? 'max-w-[92rem]' : 'max-w-7xl',
         className,
       )}
