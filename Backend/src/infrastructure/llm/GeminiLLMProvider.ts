@@ -37,6 +37,7 @@ export class GeminiLLMProvider implements ILLMProvider {
         },
         generationConfig: {
           maxOutputTokens: request.maxTokens ?? 2000,
+          thinkingConfig: { thinkingBudget: 0 },
         },
       }),
     });
