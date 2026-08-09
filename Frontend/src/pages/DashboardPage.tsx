@@ -73,7 +73,7 @@ export function DashboardPage() {
   return (
     <PageStateGate state={state} kind="dashboard" onRetry={retry}>
       <PageTransition>
-        <MissionFrame>
+        <MissionFrame className="min-h-[calc(100vh-4.25rem)]">
           {/* Readiness hero — one composition */}
           <MissionSection>
             <div className="relative overflow-hidden rounded-3xl border border-helix-border/70 bg-helix-surface/40">
