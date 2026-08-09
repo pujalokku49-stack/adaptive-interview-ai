@@ -4,6 +4,7 @@ import { MessageCircle, X, Send } from 'lucide-react'
 import { AIAvatar } from '@/components/shared/Avatars'
 import { Button } from '@/components/ui/Button'
 import { useToast } from '@/context/ToastContext'
+import { api } from '@/lib/api'
 
 export function FloatingAIAssistant() {
   const [open, setOpen] = useState(false)
@@ -25,25 +26,8 @@ export function FloatingAIAssistant() {
     setMessages((m) => [...m, { role: 'user', content: userMsg }])
 
     try {
-      const apiKey = import.meta.env.VITE_API_KEY
-      const res = await fetch('/api/assistant', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(apiKey ? {
-            'X-API-Key': apiKey,
-            'Authorization': `Bearer ${apiKey}`,
-          } : {}),
-        },
-        body: JSON.stringify({ message: userMsg }),
-      })
-
-      if (res.ok) {
-        const data = (await res.json()) as { reply: string }
-        setMessages((m) => [...m, { role: 'ai', content: data.reply }])
-      } else {
-        throw new Error('Endpoint offline')
-      }
+      const data = await api.post<{ reply: string }>('/assistant', { message: userMsg })
+      setMessages((m) => [...m, { role: 'ai', content: data.reply }])
     } catch {
       setMessages((m) => [
         ...m,
