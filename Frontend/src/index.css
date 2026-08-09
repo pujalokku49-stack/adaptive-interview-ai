@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-sans: "Source Sans 3", system-ui, sans-serif;
+
+  /* Dark defaults — WCAG AA friendly muted/text pairs */
+  --color-helix-bg: #070d10;
+  --color-helix-surface: #0e171c;
+  --color-helix-elevated: #152229;
+  --color-helix-border: #2a3d46;
+  --color-helix-muted: #94a8b4;
+  --color-helix-text: #e8f0f4;
+  --color-helix-signal: #3ee0c5;
+  --color-helix-signal-dim: #2bbfa8;
+  --color-helix-copper: #e8a87c;
+  --color-helix-copper-dim: #d4926a;
+  --color-helix-success: #6dcb8e;
+  --color-helix-danger: #e87a7a;
+  --color-helix-warning: #e8c56d;
+  --color-helix-on-accent: #06201c;
+
+  --shadow-soft: 0 8px 28px -10px rgb(0 0 0 / 0.4);
+  --shadow-glow: 0 0 36px -12px rgb(62 224 197 / 0.18);
+  --shadow-card: 0 10px 32px -14px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(62 224 197 / 0.04);
+  --shadow-float: 0 16px 40px -18px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(232 168 124 / 0.05);
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+
+  --space-section: 2rem;
+  --space-page: 1.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-helix-border;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html:not(.dark) {
+    --color-helix-bg: #f0f4f6;
+    --color-helix-surface: #fafcfd;
+    --color-helix-elevated: #e6eef1;
+    --color-helix-border: #b8c8d0;
+    --color-helix-muted: #4a6170;
+    --color-helix-text: #0c161b;
+    --color-helix-signal: #0f766e;
+    --color-helix-signal-dim: #0d9488;
+    --color-helix-copper: #b86b3a;
+    --color-helix-copper-dim: #9a5a30;
+    --color-helix-success: #2f8f5b;
+    --color-helix-danger: #c44d4d;
+    --color-helix-warning: #b8860b;
+    --color-helix-on-accent: #f4fffc;
+    --shadow-soft: 0 8px 24px -10px rgb(15 26 31 / 0.08);
+    --shadow-glow: 0 0 32px -10px rgb(15 118 110 / 0.15);
+    --shadow-card: 0 10px 28px -14px rgb(15 26 31 / 0.1), 0 0 0 1px rgb(15 118 110 / 0.06);
+    --shadow-float: 0 16px 36px -16px rgb(15 26 31 / 0.12), 0 0 0 1px rgb(184 107 58 / 0.08);
+  }
+
+  body {
+    @apply bg-helix-bg font-sans text-base leading-relaxed text-helix-text transition-colors duration-300;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-helix-text;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-helix-signal);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    @apply bg-helix-signal/30 text-helix-text;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--color-helix-border) 85%, transparent);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--color-helix-muted) 50%, transparent);
+  }
+
+  /* Consistent icon defaults inside interactive controls */
+  button svg,
+  a svg,
+  [role="button"] svg {
+    flex-shrink: 0;
+  }
+}
+
+@layer components {
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-helix-signal focus-visible:ring-offset-2 focus-visible:ring-offset-helix-bg;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-xl focus:bg-helix-signal focus:px-4 focus:py-2.5 focus:font-display focus:text-sm focus:font-semibold;
+    color: var(--color-helix-on-accent);
+  }
+
+  .icon-sm { width: 1rem; height: 1rem; }
+  .icon-md { width: 1.25rem; height: 1.25rem; }
+  .icon-lg { width: 1.5rem; height: 1.5rem; }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass {
+    @apply border border-helix-border/60 bg-helix-surface/70 backdrop-blur-xl;
+  }
+
+  .os-atmosphere {
+    background:
+      radial-gradient(ellipse 80% 50% at 10% -10%, rgb(62 224 197 / 0.1), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 95% 10%, rgb(232 168 124 / 0.07), transparent 50%),
+      linear-gradient(165deg, #070d10 0%, #0b1418 45%, #0a1216 100%);
+  }
+
+  html:not(.dark) .os-atmosphere {
+    background:
+      radial-gradient(ellipse 80% 50% at 10% -10%, rgb(15 118 110 / 0.08), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 95% 10%, rgb(184 107 58 / 0.06), transparent 50%),
+      linear-gradient(165deg, #f0f4f6 0%, #f5f8f9 45%, #e8eef0 100%);
+  }
+
+  .neural-mesh {
+    background-image:
+      radial-gradient(circle at 18% 22%, rgb(62 224 197 / 0.06) 0%, transparent 28%),
+      radial-gradient(circle at 78% 18%, rgb(232 168 124 / 0.05) 0%, transparent 26%),
+      linear-gradient(rgb(36 56 64 / 0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(36 56 64 / 0.2) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 56px 56px, 56px 56px;
+    mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, black 20%, transparent 85%);
+  }
+
+  html:not(.dark) .neural-mesh {
+    background-image:
+      radial-gradient(circle at 18% 22%, rgb(15 118 110 / 0.06) 0%, transparent 28%),
+      radial-gradient(circle at 78% 18%, rgb(184 107 58 / 0.04) 0%, transparent 26%),
+      linear-gradient(rgb(184 200 208 / 0.45) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(184 200 208 / 0.45) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 56px 56px, 56px 56px;
+  }
+
+  .neural-grid {
+    background-image:
+      radial-gradient(circle at 20% 30%, rgb(62 224 197 / 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgb(232 168 124 / 0.05) 0%, transparent 35%),
+      linear-gradient(rgb(36 53 62 / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(36 53 62 / 0.3) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  }
+
+  html:not(.dark) .neural-grid {
+    background-image:
+      radial-gradient(circle at 20% 30%, rgb(15 118 110 / 0.07) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgb(184 107 58 / 0.05) 0%, transparent 35%),
+      linear-gradient(rgb(205 216 221 / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(205 216 221 / 0.5) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  }
+
+  .panel-adaptive {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    border: 1px solid color-mix(in oklab, var(--color-helix-border) 80%, transparent);
+    background:
+      linear-gradient(145deg, rgb(21 34 41 / 0.95) 0%, rgb(14 23 28 / 0.88) 100%);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(16px);
+  }
+
+  .panel-adaptive::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(125deg, rgb(62 224 197 / 0.04) 0%, transparent 40%);
+    opacity: 1;
+  }
+
+  html:not(.dark) .panel-adaptive {
+    background:
+      linear-gradient(145deg, rgb(255 255 255 / 0.96) 0%, rgb(247 250 251 / 0.92) 100%);
+  }
+
+  .panel-float {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    border: 1px solid color-mix(in oklab, var(--color-helix-border) 80%, transparent);
+    background:
+      linear-gradient(145deg, rgb(21 34 41 / 0.95) 0%, rgb(14 23 28 / 0.88) 100%);
+    box-shadow: var(--shadow-float);
+    backdrop-filter: blur(16px);
+    transform: translateZ(0);
+  }
+
+  .panel-float::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(125deg, rgb(62 224 197 / 0.04) 0%, transparent 42%, rgb(232 168 124 / 0.03) 100%);
+  }
+
+  html:not(.dark) .panel-float {
+    background:
+      linear-gradient(145deg, rgb(255 255 255 / 0.96) 0%, rgb(247 250 251 / 0.92) 100%);
+  }
+
+  .panel-inset {
+    border-radius: 0.75rem;
+    border: 1px solid color-mix(in oklab, var(--color-helix-border) 70%, transparent);
+    background: color-mix(in oklab, var(--color-helix-elevated) 45%, transparent);
+  }
+
+  .os-rail {
+    @apply relative border-helix-border/80 bg-helix-surface/55 backdrop-blur-xl;
+  }
+
+  .os-topbar {
+    @apply border-helix-border/60 bg-helix-bg/55 backdrop-blur-xl;
+  }
+
+  .connection-pulse {
+    stroke-dasharray: 6 10;
+    animation: dash-flow 2.8s linear infinite;
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(62 224 197 / 0.07) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  .shimmer-sheen {
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      rgb(255 255 255 / 0.04) 50%,
+      transparent 65%
+    );
+    background-size: 220% 100%;
+    animation: shimmer 2.1s ease-in-out infinite;
+  }
+
+  .status-chip {
+    @apply inline-flex items-center gap-1.5 rounded-md border border-helix-signal/30 bg-helix-signal/10 px-2 py-0.5 font-display text-[11px] font-semibold tracking-wide text-helix-signal;
+  }
+
+  .depth-1 { box-shadow: 0 4px 14px -6px rgb(0 0 0 / 0.3); }
+  .depth-2 { box-shadow: var(--shadow-card); }
+  .depth-3 { box-shadow: var(--shadow-float); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes thinking {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -64; }
+}
+
+@keyframes node-breathe {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.12); }
+}
+
+@keyframes aurora-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(1.5%, -1%) scale(1.03); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .shimmer,
+  .shimmer-sheen,
+  .connection-pulse {
+    animation: none !important;
+  }
+}
