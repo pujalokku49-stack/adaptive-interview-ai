@@ -51,7 +51,7 @@ router.post(
       const result = await llmProvider.complete({
         system: SYSTEM_PROMPT,
         prompt: userMessage.trim(),
-        maxTokens: 400,
+        maxTokens: 1000,
       });
 
       res.status(200).json({
