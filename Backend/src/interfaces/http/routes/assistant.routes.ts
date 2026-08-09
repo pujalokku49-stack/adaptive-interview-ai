@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { llmProvider } from '@infrastructure/composition/llmProviderInstance';
 import { asyncHandler } from '@shared/utils/asyncHandler';
+import { logger } from '@infrastructure/logger/logger';
 
 const router = Router();
 
@@ -57,8 +58,9 @@ router.post(
         status: 'ok',
         reply: result.text,
       });
-    } catch {
+    } catch (err) {
       // Fallback response if LLM API key is absent or provider request fails
+      logger.error({ err }, 'Assistant LLM call failed, using fallback reply');
       const text = userMessage.trim().toLowerCase();
       let reply = `I'm Helix Guide! I can brief you on candidate readiness, launch an Interview Chamber, or walk you through your Candidate DNA signals.`;
 
