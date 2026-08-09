@@ -201,8 +201,7 @@ export function LandingPage() {
             <motion.li
               key={f.title}
               initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04 }}
               className="grid gap-4 py-8 sm:grid-cols-[4rem_1fr_auto] sm:items-start"
             >
@@ -234,8 +233,7 @@ export function LandingPage() {
               <motion.div
                 key={card.title}
                 initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-helix-border/70 bg-helix-bg"
               >
@@ -265,8 +263,7 @@ export function LandingPage() {
             <motion.blockquote
               key={t.name}
               initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               className="border-l-2 border-helix-signal/35 pl-5"
             >
